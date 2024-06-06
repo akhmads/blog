@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category', function (Blueprint $table) {
-            $table->ulid('id');
-            $table->string('name')->index();
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->date('date')->index();
             $table->string('slug')->unique();
-            $table->enum('status', ['active','inactive'])->index()->default('active');
+            $table->text('body')->nullable();
+            $table->foreignId('author_id')->constrained('users');
+            $table->enum('status', ['draft','published'])->index()->default('draft');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category');
+        Schema::dropIfExists('posts');
     }
 };

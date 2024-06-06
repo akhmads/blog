@@ -3,16 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\HasFilter;
 
 class Category extends Model
 {
-    use HasFilter, HasUlids;
+    use HasFilter;
 
-    protected $table = 'category';
+    protected $table = 'categories';
     protected $guarded = [];
 
     public function store(): BelongsTo
@@ -20,9 +19,9 @@ class Category extends Model
         return $this->belongsTo(Store::class,'store_id','id')->withDefault();
     }
 
-    public function products(): HasMany
+    public function posts(): HasMany
     {
-        return $this->hasMany(Product::class,'category_id','id')->withDefault();
+        return $this->hasMany(Post::class,'category_id','id');
     }
 
     public function scopeSelectable($query)

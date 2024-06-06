@@ -49,6 +49,7 @@
     <x-main full-width>
 
         {{-- SIDEBAR --}}
+        @if(auth()->user())
         <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
 
             {{-- BRAND --}}
@@ -80,7 +81,7 @@
 
                 <x-menu-item title="Home" icon="o-sparkles" link="/" />
                 <x-menu-item title="Posts" icon="o-cube" link="/posts" />
-                <x-menu-item title="Category" icon="o-hashtag" link="/category" />
+                <x-menu-item title="Tags" icon="o-hashtag" link="/tags" />
 
                 @can('admin')
                 <x-menu-sub title="Setup" icon="o-cog-6-tooth">
@@ -94,6 +95,7 @@
                 </x-menu-item>
             </x-menu>
         </x-slot:sidebar>
+        @endif
 
         {{-- The `$slot` goes here --}}
         <x-slot:content>
