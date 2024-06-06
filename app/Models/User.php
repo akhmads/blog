@@ -44,9 +44,4 @@ class User extends Authenticatable
             'status' => ActiveStatus::class,
         ];
     }
-
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Store::class,'store_id','id')->withDefault();
-    }
 }

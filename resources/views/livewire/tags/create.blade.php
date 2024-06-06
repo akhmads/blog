@@ -26,7 +26,7 @@ new class extends Component {
     <x-header title="Create Tag" separator />
     <div class="lg:w-full">
         <x-form wire:submit="save">
-            <x-card title="Details" separator>
+            <x-card separator>
                 <div class="space-y-4">
                     <x-input label="Name" wire:model="name" />
                 </div>

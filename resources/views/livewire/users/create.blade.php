@@ -1,14 +1,13 @@
 <?php
 
-use Livewire\Volt\Component;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
 use App\Enums\Role;
 use App\Enums\ActiveStatus;
-use App\Models\Store;
 use App\Models\User;
 
 new class extends Component {
@@ -19,27 +18,8 @@ new class extends Component {
     public $password = '';
     public $password_confirmation = '';
     public $avatar = '';
-    public $store_id = '';
     public $role = Role::admin;
     public $status = ActiveStatus::active;
-    public Collection $storeSearchable;
-
-    public function mount(): void
-    {
-        $this->searchStore();
-    }
-
-    public function searchStore(string $value = ''): void
-    {
-        $selectedOption = Store::where('id', intval($this->store_id))->get();
-        $this->storeSearchable = Store::query()
-            ->where('name', 'like', "%$value%")
-            ->active()
-            ->take(20)
-            ->orderBy('name')
-            ->get()
-            ->merge($selectedOption);
-    }
 
     public function save(): void
     {
@@ -50,7 +30,6 @@ new class extends Component {
             'password_confirmation' => 'required',
             'avatar' => 'nullable|image|max:1024',
             'role' => 'required',
-            'store_id' => '',
             'status' => 'required',
         ]);
 
@@ -63,7 +42,6 @@ new class extends Component {
         }
 
         $data['password'] = Hash::make($data['password']);
-        $data['store_id'] = intval($data['store_id']);
 
         $user = User::create($data);
 
@@ -88,7 +66,6 @@ new class extends Component {
                         <x-input label="Password" wire:model="password" type="password" />
                         <x-input label="Confirm Password" wire:model="password_confirmation" type="password" />
                     </div>
-                    <x-choices label="Store" wire:model.live="store_id" :options="$storeSearchable" search-function="searchStore" option-label="name" single searchable />
                     <div class="space-y-4 lg:space-y-0 lg:grid grid-cols-2 gap-4">
                         <x-select label="Role" :options="\App\Enums\Role::toSelect()" wire:model="role" />
                         <x-select label="Status" :options="\App\Enums\ActiveStatus::toSelect()" wire:model="status" />

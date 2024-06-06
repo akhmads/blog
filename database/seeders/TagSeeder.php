@@ -3,34 +3,32 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use App\Models\Category;
+use App\Models\Tag;
 
-class CategorySeeder extends Seeder
+class TagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Category::create([
+        Tag::create([
             'name' => 'Laravel',
             'slug' => Str::slug('Laravel'),
         ]);
 
-        Category::create([
+        Tag::create([
             'name' => 'Tailwind CSS',
             'slug' => Str::slug('Tailwind CSS'),
         ]);
 
-        Category::create([
+        Tag::create([
             'name' => 'Alpine JS',
             'slug' => Str::slug('Alpine JS'),
         ]);
 
-        Category::create([
+        Tag::create([
             'name' => 'Livewire',
             'slug' => Str::slug('Livewire'),
         ]);

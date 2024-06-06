@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 use Mary\Traits\Toast;
 use App\Enums\Role;
 use App\Enums\ActiveStatus;
-use App\Models\Store;
 use App\Models\User;
 
 new class extends Component {
@@ -21,32 +20,17 @@ new class extends Component {
     public $password = '';
     public $password_confirmation = '';
     public $avatar = '';
-    public $store_id = '';
     public $role = Role::admin;
     public $status = ActiveStatus::active;
-    public Collection $storeSearchable;
     public $storedAvatar = '';
 
     public function mount(): void
     {
         $this->fill($this->user);
-        $this->searchStore();
 
         $this->user->password = '';
         $this->storedAvatar = $this->avatar;
         $this->avatar = '';
-    }
-
-    public function searchStore(string $value = ''): void
-    {
-        $selectedOption = Store::where('id', intval($this->store_id))->get();
-        $this->storeSearchable = Store::query()
-            ->where('name', 'like', "%$value%")
-            ->active()
-            ->take(20)
-            ->orderBy('name')
-            ->get()
-            ->merge($selectedOption);
     }
 
     public function save(): void
@@ -58,7 +42,6 @@ new class extends Component {
             'password_confirmation' => 'nullable',
             'avatar' => 'nullable|image|max:1024',
             'role' => 'required',
-            'store_id' => 'required',
             'status' => 'required',
         ]);
 
@@ -99,7 +82,6 @@ new class extends Component {
                         <x-input label="Password" wire:model="password" type="password" hint="Password changes are optional" />
                         <x-input label="Confirm Password" wire:model="password_confirmation" type="password" />
                     </div>
-                    <x-choices label="Store" wire:model="store_id" :options="$storeSearchable" search-function="searchStore" option-label="name" single searchable />
                     <div class="space-y-4 xl:space-y-0 xl:grid grid-cols-2 gap-4">
                         <x-select label="Role" :options="\App\Enums\Role::toSelect()" wire:model="role" />
                         <x-select label="Status" :options="\App\Enums\ActiveStatus::toSelect()" wire:model="status" />

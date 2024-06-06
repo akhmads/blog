@@ -7,19 +7,20 @@ use Livewire\WithPagination;
 use Mary\Traits\Toast;
 use App\Traits\TableHelper;
 use App\Models\Tag;
+use App\Models\Post;
 
 new class extends Component {
     use Toast, WithPagination, TableHelper;
 
-    #[Session(key: 'tags_per_page')]
+    #[Session(key: 'posts_per_page')]
     public int $perPage = 8;
 
-    #[Session(key: 'tags_search')]
+    #[Session(key: 'posts_search')]
     public string $search = '';
 
     public int $filterCount = 0;
     public bool $drawer = false;
-    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
+    public array $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
 
     public function mount(): void
     {
@@ -34,36 +35,28 @@ new class extends Component {
         $this->updateFilterCount();
     }
 
-    public function delete(Tag $tag): void
+    public function delete(Post $post): void
     {
-        try {
-            $tag->delete();
-            $error = false;
-        } catch (Exception $ex) {
-            $error = $ex->getMessage();
-        }
+        $post->tags()->detach();
+        $post->delete();
 
-        if ($error) {
-            $this->error('Tag cannot be deleted');
-        } else {
-            $this->warning('Tag has been deleted');
-        }
+        $this->warning('Posts has been deleted');
     }
 
     public function headers(): array
     {
         return [
-            ['key' => 'id', 'label' => 'ID'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'slug', 'label' => 'Slug'],
+            ['key' => 'title', 'label' => 'Title'],
+            ['key' => 'date', 'label' => 'Date'],
+            ['key' => 'status', 'label' => 'Status'],
         ];
     }
 
-    public function tags(): LengthAwarePaginator
+    public function posts(): LengthAwarePaginator
     {
-        return Tag::query()
+        return Post::query()
         ->orderBy(...array_values($this->sortBy))
-        ->filterLike('name', $this->search)
+        ->filterLike('title', $this->search)
         ->paginate($this->perPage);
     }
 
@@ -72,7 +65,7 @@ new class extends Component {
         return [
             'pageList' => $this->pageList(),
             'headers' => $this->headers(),
-            'tags' => $this->tags(),
+            'posts' => $this->posts(),
         ];
     }
 
@@ -92,11 +85,18 @@ new class extends Component {
         }
         $this->filterCount = $count;
     }
+
+    public function fake()
+    {
+        Post::factory(3)
+        ->recycle(Tag::factory()->count(3))
+        ->create();
+    }
 }; ?>
 
 <div>
     <!-- HEADER -->
-    <x-header title="Tags" separator progress-indicator>
+    <x-header title="Posts" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <div class="flex gap-4 items-center">
                 <x-select label="" wire:model.live="perPage" :options="$pageList" />
@@ -105,7 +105,8 @@ new class extends Component {
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" badge="{{ $filterCount }}" />
-            <x-button label="Create" link="/tags/create" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="Fake" wire:click="fake" responsive icon="o-plus" />
+            <x-button label="Create" link="/posts/create" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
@@ -115,9 +116,15 @@ new class extends Component {
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$tags" :sort-by="$sortBy" with-pagination link="tags/{id}/edit">
-            @scope('actions', $tag)
-            <x-button icon="o-trash" wire:click="delete('{{ $tag->id }}')" wire:confirm="Are you sure?" spinner="delete('{{ $tag->id }}')" class="btn-ghost btn-sm text-red-500" />
+        <x-table :headers="$headers" :rows="$posts" :sort-by="$sortBy" with-pagination link="posts/{id}/edit">
+            @scope('cell_date', $post)
+            {{ $post->date->format('F d, Y') }}
+            @endscope
+            @scope('cell_status', $post)
+            <x-badge :value="$post->status->value" class="text-xs uppercase {{ $post->status->color() }}" />
+            @endscope
+            @scope('actions', $post)
+            <x-button icon="o-trash" wire:click="delete('{{ $post['id'] }}')" wire:confirm="Are you sure?" spinner="delete('{{ $post['id'] }}')" class="btn-ghost btn-sm text-red-500" />
             @endscope
         </x-table>
     </x-card>

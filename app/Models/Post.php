@@ -2,16 +2,27 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Cviebrock\EloquentSluggable\Sluggable;
+use App\Enums\PostStatus;
 use App\Traits\HasFilter;
 
 class Post extends Model
 {
-    use HasFilter;
+    use HasFactory, HasFilter, Sluggable;
 
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+            'status' => PostStatus::class,
+        ];
+    }
 
     public function author(): BelongsTo
     {
@@ -20,7 +31,7 @@ class Post extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tags::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function scopePublished($query)
@@ -31,5 +42,14 @@ class Post extends Model
     public function scopeDraft($query)
     {
         return $query->where('status','draft');
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

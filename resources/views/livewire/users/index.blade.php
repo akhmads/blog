@@ -7,7 +7,6 @@ use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 use App\Traits\TableHelper;
-use App\Models\Store;
 use App\Models\User;
 
 new class extends Component {
@@ -18,16 +17,14 @@ new class extends Component {
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
-    public string $store_id = '';
     public string $role = '';
     public string $status = '';
-    public Collection $storeSearchable;
 
     // Clear filters
     public function clear(): void
     {
         $this->warning('Filters cleared');
-        $this->reset(['search','store_id','role','status']);
+        $this->reset(['search','role','status']);
         $this->resetPage();
     }
 
@@ -35,7 +32,7 @@ new class extends Component {
     public function delete(User $user): void
     {
         $user->delete();
-        $this->warning("Store has been deleted");
+        $this->warning("User has been deleted");
     }
 
     // Table headers
@@ -46,7 +43,6 @@ new class extends Component {
             ['key' => 'name', 'label' => 'Name'],
             ['key' => 'email', 'label' => 'Email'],
             ['key' => 'role', 'label' => 'Role'],
-            ['key' => 'store_name', 'label' => 'Store'],
             ['key' => 'status', 'label' => 'Status'],
         ];
     }
@@ -54,18 +50,11 @@ new class extends Component {
     public function users(): LengthAwarePaginator
     {
         return User::query()
-        ->withAggregate('store', 'name')
         ->orderBy(...array_values($this->sortBy))
         ->filterLike('name', $this->search)
-        ->filterWhere('store_id', $this->store_id)
         ->filterWhere('role', $this->role)
         ->filterWhere('status', $this->status)
         ->paginate($this->perPage);
-    }
-
-    public function mount(): void
-    {
-        $this->searchStore();
     }
 
     public function with(): array
@@ -77,16 +66,6 @@ new class extends Component {
         ];
     }
 
-    public function searchStore(string $value = ''): void
-    {
-        $this->storeSearchable = Store::query()
-            ->where('name', 'like', "%$value%")
-            ->take(20)
-            ->orderBy('name')
-            ->get();
-    }
-
-    // Reset pagination when any component property changes
     public function updated($property): void
     {
         if (! is_array($property) && $property != "") {
@@ -132,7 +111,6 @@ new class extends Component {
     <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
         <div class="grid gap-5">
             <x-input placeholder="Search..." wire:model.live.debounce="search" icon="o-magnifying-glass" @keydown.enter="$wire.drawer = false" />
-            <x-choices label="Store" wire:model.live="store_id" :options="$storeSearchable" search-function="searchStore" option-label="name" single searchable />
             <x-select label="Role" wire:model.live="role" :options="\App\Enums\Role::toSelect(true)" />
             <x-select label="Status" wire:model.live="status" :options="\App\Enums\ActiveStatus::toSelect(true)" />
         </div>

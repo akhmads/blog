@@ -10,6 +10,7 @@ new class extends Component {
     public Tag $tag;
 
     public $name;
+    public $slug;
 
     public function mount(): void
     {
@@ -32,9 +33,10 @@ new class extends Component {
     <x-header title="Update Tag" separator />
     <div class="lg:w-full">
         <x-form wire:submit="save">
-            <x-card title="Details" separator>
+            <x-card separator>
                 <div class="space-y-4">
                     <x-input label="Name" wire:model="name" />
+                    <x-input label="Slug" wire:model="slug" readonly />
                 </div>
             </x-card>
             <x-slot:actions>

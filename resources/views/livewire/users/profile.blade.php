@@ -18,7 +18,6 @@ new class extends Component {
     public $password_confirmation = '';
     public $avatar = '';
     public $storedAvatar = '';
-    public $store = '';
     public $role = '';
 
     public function mount(): void
@@ -26,7 +25,6 @@ new class extends Component {
         $this->name = auth()->user()->name;
         $this->email = auth()->user()->email;
         $this->storedAvatar = auth()->user()->avatar;
-        $this->store = auth()->user()->store->name;
         $this->role = auth()->user()->role;
         $this->avatar = '';
     }
@@ -48,7 +46,7 @@ new class extends Component {
 
         auth()->user()->update($data);
 
-        $this->success('Profile has been updated.', redirectTo: '/user/profile', position: 'toast-bottom toast-end');
+        $this->success('Profile has been updated.', redirectTo: '/user/profile');
     }
 
     public function changePassword(): void
@@ -66,7 +64,7 @@ new class extends Component {
 
         auth()->user()->update($data);
 
-        $this->success('Password has been updated.', position: 'toast-bottom toast-end');
+        $this->success('Password has been updated.');
     }
 }; ?>
 
