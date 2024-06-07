@@ -60,7 +60,11 @@ $configDate = [
 @endphp
 
 <div>
-    <x-header title="Create Post" separator />
+    <x-header title="Create Post" separator>
+        <x-slot:actions>
+            <x-button label="Back" link="/posts" icon="o-arrow-uturn-left" />
+        </x-slot:actions>
+    </x-header>
     <x-form wire:submit="save">
         <div class="space-y-4 lg:space-y-0 lg:grid grid-cols-12 gap-4">
             <div class="col-span-8">
