@@ -85,13 +85,13 @@ new class extends Component {
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
-            <x-button label="Create" link="/users/create" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="Create" link="/cp/users/create" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy" link="users/{id}/edit" with-pagination>
+        <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy" link="/cp/users/{id}/edit" with-pagination>
             @scope('cell_avatar', $user)
             <x-avatar image="{{ $user->avatar ?? asset('assets/img/default-avatar.png') }}" class="!w-8" />
             @endscope
@@ -100,7 +100,7 @@ new class extends Component {
             @endscope
             @scope('actions', $user)
             <div class="flex items-center gap-0">
-                <x-button link="users/{{$user['id']}}/edit" icon="o-pencil-square" class="btn-ghost btn-sm text-blue-500" />
+                <x-button link="/cp/users/{{$user['id']}}/edit" icon="o-pencil-square" class="btn-ghost btn-sm text-blue-500" />
                 <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" wire:confirm="Are you sure?" spinner="delete({{ $user['id'] }})" class="btn-ghost btn-sm text-red-500" />
             </div>
             @endscope

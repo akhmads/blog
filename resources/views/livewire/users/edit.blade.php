@@ -61,7 +61,7 @@ new class extends Component {
 
         $this->user->update($data);
 
-        $this->success('User has been updated.', redirectTo: '/users');
+        $this->success('User has been updated.', redirectTo: '/cp/users');
     }
 }; ?>
 
@@ -89,7 +89,7 @@ new class extends Component {
                 </div>
             </x-card>
             <x-slot:actions>
-                <x-button label="Cancel" link="/users" />
+                <x-button label="Cancel" link="/cp/users" />
                 <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
             </x-slot:actions>
         </x-form>

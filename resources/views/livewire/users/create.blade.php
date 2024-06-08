@@ -45,7 +45,7 @@ new class extends Component {
 
         $user = User::create($data);
 
-        $this->success('User has been created.', redirectTo: '/users');
+        $this->success('User has been created.', redirectTo: '/cp/users');
     }
 }; ?>
 
@@ -73,7 +73,7 @@ new class extends Component {
                 </div>
             </x-card>
             <x-slot:actions>
-                <x-button label="Cancel" link="/users" />
+                <x-button label="Cancel" link="/cp/users" />
                 <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
             </x-slot:actions>
         </x-form>

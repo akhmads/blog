@@ -46,7 +46,7 @@ new class extends Component {
 
         auth()->user()->update($data);
 
-        $this->success('Profile has been updated.', redirectTo: '/user/profile');
+        $this->success('Profile has been updated.');
     }
 
     public function changePassword(): void
