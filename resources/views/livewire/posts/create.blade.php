@@ -47,7 +47,7 @@ new class extends Component {
 
         $post->tags()->sync($this->tags);
 
-        $this->success('Post has been created.', redirectTo: '/posts');
+        $this->success('Post has been created.', redirectTo: '/cp/posts');
     }
 }; ?>
 
@@ -62,7 +62,7 @@ $configDate = [
 <div>
     <x-header title="Create Post" separator>
         <x-slot:actions>
-            <x-button label="Back" link="/posts" icon="o-arrow-uturn-left" />
+            <x-button label="Back" link="/cp/posts" icon="o-arrow-uturn-left" />
         </x-slot:actions>
     </x-header>
     <x-form wire:submit="save">
@@ -86,7 +86,7 @@ $configDate = [
             </div>
         </div>
         <x-slot:actions>
-            <x-button label="Cancel" link="/posts" />
+            <x-button label="Cancel" link="/cp/posts" />
             <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
         </x-slot:actions>
     </x-form>

@@ -40,7 +40,7 @@ new class extends Component {
         $post->tags()->detach();
         $post->delete();
 
-        $this->warning('Posts has been deleted');
+        $this->success('Posts has been deleted');
     }
 
     public function headers(): array
@@ -106,7 +106,7 @@ new class extends Component {
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" badge="{{ $filterCount }}" />
             <x-button label="Fake" wire:click="fake" responsive icon="o-plus" />
-            <x-button label="Create" link="/posts/create" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="Create" link="/cp/posts/create" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
@@ -116,7 +116,7 @@ new class extends Component {
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$posts" :sort-by="$sortBy" with-pagination link="posts/{id}/edit">
+        <x-table :headers="$headers" :rows="$posts" :sort-by="$sortBy" with-pagination link="/cp/posts/{id}/edit">
             @scope('cell_date', $post)
             {{ $post->date->format('F d, Y') }}
             @endscope
