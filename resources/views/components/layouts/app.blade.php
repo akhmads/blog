@@ -61,7 +61,7 @@
                 {{-- User --}}
                 @if($user = auth()->user())
                     <x-menu-separator />
-                    <x-list-item :item="$user" link="/user/profile" value="name" sub-value="branch.name" no-separator class="-mx-2 !-my-2 rounded">
+                    <x-list-item :item="$user" link="/cp/user/profile" value="name" sub-value="branch.name" no-separator class="-mx-2 !-my-2 rounded">
                         <x-slot:avatar>
                             <x-avatar image="{{ $user->avatar ?? asset('assets/img/default-avatar.png') }}" class="!w-10" />
                         </x-slot:avatar>
@@ -70,7 +70,7 @@
                                 <x-slot:trigger>
                                     <x-button icon="o-cog-6-tooth" class="btn-circle btn-ghost btn-sm" />
                                 </x-slot:trigger>
-                                <x-menu-item title="My profile" icon="o-user" link="/user/profile" />
+                                <x-menu-item title="My profile" icon="o-user" link="/cp/user/profile" />
                                 <x-menu-item title="Change Theme" icon="o-swatch" @click="$dispatch('mary-toggle-theme')" />
                                 <x-menu-item title="Log Out" icon="o-power" no-wire-navigate link="/logout" />
                             </x-dropdown>
@@ -79,13 +79,13 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Home" icon="o-sparkles" link="/" />
-                <x-menu-item title="Posts" icon="o-cube" link="/posts" />
-                <x-menu-item title="Tags" icon="o-hashtag" link="/tags" />
+                <x-menu-item title="Home" icon="o-sparkles" link="/cp/" />
+                <x-menu-item title="Posts" icon="o-cube" link="/cp/posts" />
+                <x-menu-item title="Tags" icon="o-hashtag" link="/cp/tags" />
 
                 @can('admin')
                 <x-menu-sub title="Setup" icon="o-cog-6-tooth">
-                    <x-menu-item title="Users" link="/users" />
+                    <x-menu-item title="Users" link="/cp/users" />
                 </x-menu-sub>
                 @endcan
 

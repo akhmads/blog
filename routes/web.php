@@ -6,31 +6,35 @@ use Livewire\Volt\Volt;
 Volt::route('/login', 'login')->name('login');
 Volt::route('/page-not-found', '404');
 
-Route::middleware('auth')->group(function () {
+Route::prefix('cp')->group(function () {
 
-    Volt::route('/', 'home');
-    Volt::route('/user/profile', 'users.profile');
+    Route::middleware('auth')->group(function () {
 
-    Volt::route('/posts', 'posts.index');
-    Volt::route('/posts/create', 'posts.create');
-    Volt::route('/posts/{post}/edit', 'posts.edit');
+        Volt::route('/', 'home');
+        Volt::route('/user/profile', 'users.profile');
 
-    Volt::route('/tags', 'tags.index');
-    Volt::route('/tags/create', 'tags.create');
-    Volt::route('/tags/{tag}/edit', 'tags.edit');
-});
+        Volt::route('/posts', 'posts.index');
+        Volt::route('/posts/create', 'posts.create');
+        Volt::route('/posts/{post}/edit', 'posts.edit');
 
-Route::middleware(['auth','can:admin'])->group(function () {
+        Volt::route('/tags', 'tags.index');
+        Volt::route('/tags/create', 'tags.create');
+        Volt::route('/tags/{tag}/edit', 'tags.edit');
+    });
 
-    Volt::route('/users', 'users.index');
-    Volt::route('/users/create', 'users.create');
-    Volt::route('/users/{user}/edit', 'users.edit');
+    Route::middleware(['auth','can:admin'])->group(function () {
 
-});
+        Volt::route('/users', 'users.index');
+        Volt::route('/users/create', 'users.create');
+        Volt::route('/users/{user}/edit', 'users.edit');
 
-Route::get('/logout', function () {
-    auth()->logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    return redirect('/');
+    });
+
+    Route::get('/logout', function () {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/');
+    });
+
 });
