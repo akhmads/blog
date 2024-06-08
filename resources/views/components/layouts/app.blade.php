@@ -72,7 +72,7 @@
                                 </x-slot:trigger>
                                 <x-menu-item title="My profile" icon="o-user" link="/cp/user/profile" />
                                 <x-menu-item title="Change Theme" icon="o-swatch" @click="$dispatch('mary-toggle-theme')" />
-                                <x-menu-item title="Log Out" icon="o-power" no-wire-navigate link="/logout" />
+                                <x-menu-item title="Log Out" icon="o-power" no-wire-navigate link="/cp/logout" />
                             </x-dropdown>
                         </x-slot:actions>
                     </x-list-item>
