@@ -10,7 +10,8 @@ Route::prefix('cp')->group(function () {
 
     Route::middleware('auth')->group(function () {
 
-        Volt::route('/', 'home');
+        Route::redirect('/', '/cp/home');
+        Volt::route('/home', 'home');
         Volt::route('/user/profile', 'users.profile');
 
         Volt::route('/posts', 'posts.index');

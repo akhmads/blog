@@ -18,7 +18,7 @@ new class extends Component {
 
         $tag = Tag::create($data);
 
-        $this->success('Tag has been created.', redirectTo: '/tags');
+        $this->success('Tag has been created.', redirectTo: '/cp/tags');
     }
 }; ?>
 
@@ -32,7 +32,7 @@ new class extends Component {
                 </div>
             </x-card>
             <x-slot:actions>
-                <x-button label="Cancel" link="/tags" />
+                <x-button label="Cancel" link="/cp/tags" />
                 <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
             </x-slot:actions>
         </x-form>

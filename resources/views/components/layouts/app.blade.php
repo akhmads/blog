@@ -79,7 +79,7 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Home" icon="o-sparkles" link="/cp/" />
+                <x-menu-item title="Home" icon="o-sparkles" link="/cp/home" />
                 <x-menu-item title="Posts" icon="o-cube" link="/cp/posts" />
                 <x-menu-item title="Tags" icon="o-hashtag" link="/cp/tags" />
 

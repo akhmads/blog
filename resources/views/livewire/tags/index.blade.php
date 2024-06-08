@@ -46,7 +46,7 @@ new class extends Component {
         if ($error) {
             $this->error('Tag cannot be deleted');
         } else {
-            $this->warning('Tag has been deleted');
+            $this->success('Tag has been deleted');
         }
     }
 
@@ -105,7 +105,7 @@ new class extends Component {
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" badge="{{ $filterCount }}" />
-            <x-button label="Create" link="/tags/create" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="Create" link="/cp/tags/create" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
@@ -115,7 +115,7 @@ new class extends Component {
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$tags" :sort-by="$sortBy" with-pagination link="tags/{id}/edit">
+        <x-table :headers="$headers" :rows="$tags" :sort-by="$sortBy" with-pagination link="/cp/tags/{id}/edit">
             @scope('actions', $tag)
             <x-button icon="o-trash" wire:click="delete('{{ $tag->id }}')" wire:confirm="Are you sure?" spinner="delete('{{ $tag->id }}')" class="btn-ghost btn-sm text-red-500" />
             @endscope
