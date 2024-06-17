@@ -5,6 +5,8 @@ use Livewire\Volt\Volt;
 
 Volt::route('/', 'site.home');
 Volt::route('/post/{post:slug}', 'site.post');
+Volt::route('/tag/{tag:slug}', 'site.tag');
+
 Volt::route('/login', 'login')->name('login');
 Volt::route('/page-not-found', '404');
 

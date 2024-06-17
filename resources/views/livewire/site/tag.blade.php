@@ -2,20 +2,22 @@
 
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Volt\Component;
-use App\Models\Post;
+use App\Models\Tag;
 
 new
 #[Layout('components.layouts.blog')]
 class extends Component {
 
+    public Tag $tag;
+
     public function mount(): void
     {
-
+        $this->fill($this->tag);
     }
 
     public function with(): array
     {
-        $posts = Post::published()->latest()->get();
+        $posts = $this->tag->posts;
         return [
             'posts' => $posts
         ];

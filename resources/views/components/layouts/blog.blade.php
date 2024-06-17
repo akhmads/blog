@@ -19,7 +19,7 @@
             </label>
 
             {{-- Brand --}}
-            <div>App</div>
+            <a href="/" class="font-bold">BLOG</a>
         </x-slot:brand>
 
         {{-- Right side actions --}}
