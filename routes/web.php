@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Volt::route('/', 'site.home');
+Volt::route('/post/{post:slug}', 'site.post');
 Volt::route('/login', 'login')->name('login');
 Volt::route('/page-not-found', '404');
 
