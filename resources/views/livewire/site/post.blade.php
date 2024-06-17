@@ -27,14 +27,11 @@ class extends Component {
     <div class="lg:flex gap-10">
         <div>
             <x-card>
-                <div class="prose">
+                <div class="prose dark:prose-invert md:prose-xl">
                     <h1>{{ $post->title }}</h1>
                     {!! \Illuminate\Support\Str::markdown($post->body) !!}
                 </div>
             </x-card>
-        </div>
-        <div class="lg:w-[50%]">
-            XX
         </div>
     </div>
 </div>
