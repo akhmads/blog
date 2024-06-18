@@ -8,11 +8,11 @@ new
 #[Layout('components.layouts.blog')]
 class extends Component {
 
-    public $post;
+    public Post $post;
 
-    public function mount(Post $post): void
+    public function mount(): void
     {
-        $this->post = $post;
+        $this->fill($this->post);
     }
 
     public function with(): array
@@ -59,12 +59,6 @@ class extends Component {
             <x-card title="Related Article">
                 @foreach ($related as $post)
                 <h2 class="text-md font-semibold"><a href="{{ url('post/'.$post->slug) }}" class="text-blue-600 hover:text-blue-400">{{ $post->title }}</a></h1>
-                {{-- TAGS --}}
-                <div class="flex items-center gap-3">
-                    @foreach ($post->tags as $tag)
-                    <a href="{{ url('tag/'.$tag->slug) }}" class="text-lg border border-blue-500 py-2 px-3 rounded-xl bg-blue-50 hover:bg-blue-100">{{ $tag->name ?? '' }}</a>
-                    @endforeach
-                </div>
                 @endforeach
             </x-card>
         </div>
