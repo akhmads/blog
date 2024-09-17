@@ -21,6 +21,7 @@ export default {
             opensans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
             publicsans: ['"Public Sans"', ...defaultTheme.fontFamily.sans],
             inter: ['"Inter"', ...defaultTheme.fontFamily.sans],
+            figtree: ['"figtree"', ...defaultTheme.fontFamily.sans],
         },
     },
 

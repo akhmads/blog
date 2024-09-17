@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Volt::route('/', 'site.home');
-Volt::route('/post/{post:slug}', 'site.post');
-Volt::route('/tag/{tag:slug}', 'site.tag');
+//Volt::route('/', 'site.home');
+// Volt::route('/post/{post:slug}', 'site.post');
+// Volt::route('/tag/{tag:slug}', 'site.tag');
+
+Route::get('/', [\App\Http\Controllers\BlogController::class, 'index']);
+Route::get('/post/{post:slug}', [\App\Http\Controllers\BlogController::class, 'post']);
+Route::get('/tag/{tag:slug}', [\App\Http\Controllers\BlogController::class, 'tag']);
 
 Volt::route('/login', 'login')->name('login');
 Volt::route('/page-not-found', '404');
